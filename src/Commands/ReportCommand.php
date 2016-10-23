@@ -1,9 +1,7 @@
 <?php namespace RCAlmeida\AB\Commands;
 
-use RCAlmeida\AB\Models\Experiment;
-use RCAlmeida\AB\Models\Goal;
-
 use Illuminate\Console\Command;
+use RCAlmeida\AB\Models\Report;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Helper\Table;
@@ -41,38 +39,14 @@ class ReportCommand extends Command {
      */
     public function fire()
     {
-        $experiments = Experiment::active()->get();
-        $goals = array_unique(Goal::active()->orderBy('name')->lists('name'));
-
-        $columns = array_merge(['Experiment', 'Visitors', 'Engagement'], array_map('ucfirst', $goals));
-
+        $rows = Report::getReport();
         $table = new Table($this->output);
-        $table->setHeaders($columns);
-
-        foreach ($experiments as $experiment)
-        {
-            $engagement = $experiment->visitors ? ($experiment->engagement / $experiment->visitors * 100) : 0;
-
-            $row = [
-                $experiment->name,
-                $experiment->visitors,
-                number_format($engagement, 2) . " % (" . $experiment->engagement .")",
-            ];
-
-            $results = $experiment->goals()->lists('count', 'name');
-
-            foreach ($goals as $column)
-            {
-                $count = array_get($results, $column, 0);
-                $percentage = $experiment->visitors ? ($count / $experiment->visitors * 100) : 0;
-
-                $row[] = number_format($percentage, 2) . " % ($count)";
-            }
-
+        $table->setHeaders(array_shift($rows));
+        array_walk($rows, function($row) use ($table) {
             $table->addRow($row);
-        }
-
+        });
         $table->render();
+
     }
 
     /**
