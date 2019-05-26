@@ -1,3 +1,5 @@
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fareyouahuman%2Flaravel-5-ab.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fareyouahuman%2Flaravel-5-ab?ref=badge_shield)
+
 Laravel 5.1 A/B Testing
 =====================
 
@@ -156,3 +158,7 @@ Advanced
 
 Edited and Fixed by Raphael Almeida
 
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fareyouahuman%2Flaravel-5-ab.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fareyouahuman%2Flaravel-5-ab?ref=badge_large)
